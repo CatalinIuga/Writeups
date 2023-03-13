@@ -74,7 +74,7 @@ echo 'Hello World!'
 
 Now I looked back at the 'verify_hash.py'. It takes as arguments a zip archive, do note the archive is not unzipped yet. Then the call for the get_file function searches for the file specified in the first parameter of the function, returning the **first** occurence. After that we read that file, and check if the md5 of the file contents. If it maches a certain value, we extract all the archive and execute the command inside the 'commands/command.txt' file, otherwise we get an error message.
 
-First thought that came to mind was to change the content of the command.txt file with other command shells, but to have the same md5 hash, as md5 is known for hash collision. But to find such a hash and keeping it a valid bash command would take a lot of time and resourches (not sure its even possible...).
+First thought that came to mind was to change the content of the command.txt file with other command shells, but to have the same md5 hash, as md5 is known for hash collision. But to find such a hash and keeping it a valid bash command would take a lot of time and resources (not sure its even possible...).
 
 Looking back at the code, one thing stood up, the fact that we check the md5 hash only for the first occurence in the zipped archive. What would happen if we had more than one occurence of the same file inside the said archive? Found [this forum post](https://superuser.com/questions/224164/how-is-it-that-during-extraction-of-a-zip-i-get-two-files-of-the-same-name-in-t) to confirm my suspicions, and came up with the following solution. If we put 2 files named 'commands/command.txt' inside the archive, the get file function will get the first file that will bypass the md5 hash check, while the second file will overwrite the first one at the archive extraction time, running the commad we will store inside the said second file.
 
@@ -104,4 +104,4 @@ with open('commands.zip', 'rb') as f:
 
 ### Flag: utflag{https://youtu.be/bZe5J8SVCYQ}
 
-##### !Disclaimer! This is my first writeup, I think it's a bit long and not as concise as I would want. But opefully you like it and I'm open to feedback. Discord: @CatalinIuga#5352
+##### !Disclaimer! This is my first writeup, I think it's a bit long and not as concise as I would want. But hopefully you like it and I'm open to feedback. Discord: @CatalinIuga#5352
